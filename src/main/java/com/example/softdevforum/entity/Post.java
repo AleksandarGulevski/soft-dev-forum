@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -35,13 +34,13 @@ public class Post implements Serializable {
     @OneToMany(
             mappedBy = "post",
             cascade = CascadeType.ALL,
-            orphanRemoval = true;
+            orphanRemoval = true
     )
     private List<Comment> comments = new ArrayList<>();
 
     public void addComment(Comment comment){
         comments.add(comment);
-        comment.addPost(this);
+        comment.setPost(this);
     }
 
     public void removeComment(Comment comment){
