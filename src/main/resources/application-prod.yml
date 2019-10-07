@@ -21,6 +21,7 @@ spring:
     password: <SOME_RANDOM_PASSWORD>
     testWhileIdle: true
     validationQuery: SELECT 1
+
   jpa:
     database: POSTGRESQL
     show-sql: false
