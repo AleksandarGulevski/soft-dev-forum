@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +21,15 @@ import java.util.Objects;
 @Entity
 public class User implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String firstName;
     private String lastName;
     private String userName;
     private String email;
 
-    @OneToMany (
+    @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true
@@ -37,22 +37,22 @@ public class User implements Serializable {
     private List<Post> posts = new ArrayList<>();
     private List<Comment> comments = new ArrayList<>();
 
-    public void addPost(Post post){
+    public void addPost(Post post) {
         posts.add(post);
         post.setUser(this);
     }
 
-    public void removePost(Post post){
+    public void removePost(Post post) {
         posts.remove(post);
         post.setUser(null);
     }
 
-    public void addComment(Comment comment){
+    public void addComment(Comment comment) {
         comments.add(comment);
         comment.setUser(this);
     }
 
-    public void removeComment(Comment comment){
+    public void removeComment(Comment comment) {
         comments.remove(comment);
         comment.setUser(null);
     }
