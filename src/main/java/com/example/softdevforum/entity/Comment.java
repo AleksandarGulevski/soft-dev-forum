@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 @Getter
 @Setter
@@ -22,7 +22,7 @@ public class Comment implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String content;
-    private Timestamp timestamp;
+    private OffsetDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -50,7 +50,7 @@ public class Comment implements Serializable {
         return "Comment{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
-                ", timestamp=" + timestamp +
+                ", created at=" + createdAt +
                 '}';
     }
 }

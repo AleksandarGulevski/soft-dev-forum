@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class Post implements Serializable {
     private Long id;
     private String title;
     private String content;
-    private Timestamp timestamp;
+    private OffsetDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -71,7 +71,7 @@ public class Post implements Serializable {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", timestamp=" + timestamp +
+                ", created at=" + createdAt +
                 '}';
     }
 }
