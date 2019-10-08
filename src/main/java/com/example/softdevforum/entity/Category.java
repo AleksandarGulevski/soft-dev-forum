@@ -25,7 +25,7 @@ public class Category implements Serializable {
     private String name;
 
     @OneToMany(
-            mappedBy = "category_id",
+            mappedBy = "category",
             cascade = CascadeType.ALL,
             orphanRemoval = false
     )

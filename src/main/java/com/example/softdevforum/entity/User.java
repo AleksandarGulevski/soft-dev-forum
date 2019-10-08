@@ -11,7 +11,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -35,7 +34,6 @@ public class User implements Serializable {
             orphanRemoval = true
     )
     private List<Post> posts = new ArrayList<>();
-    private List<Comment> comments = new ArrayList<>();
 
     public void addPost(Post post) {
         posts.add(post);
@@ -45,16 +43,6 @@ public class User implements Serializable {
     public void removePost(Post post) {
         posts.remove(post);
         post.setUser(null);
-    }
-
-    public void addComment(Comment comment) {
-        comments.add(comment);
-        comment.setUser(this);
-    }
-
-    public void removeComment(Comment comment) {
-        comments.remove(comment);
-        comment.setUser(null);
     }
 
     @Override
