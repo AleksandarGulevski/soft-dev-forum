@@ -1,6 +1,6 @@
 
 server:
-  port: 9000
+  port: 9001
 logging:
   file: log/log.log
   level:

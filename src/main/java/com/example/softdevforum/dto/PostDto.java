@@ -5,8 +5,9 @@ import lombok.Value;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 @Value
 @Builder
@@ -19,6 +20,6 @@ public class PostDto implements Serializable {
     @NotBlank(message = "Post cannot be blank")
     @Length(message = "Maximum length 4000 characters", max = 4000)
     private String content;
-    @NotBlank(message = "You must enter a timestamp")
-    private Timestamp timestamp;
+    @NotNull(message = "You must enter a timestamp")
+    private OffsetDateTime createdAt;
 }

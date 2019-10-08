@@ -42,13 +42,13 @@ public class Post implements Serializable {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    public void addComment(Comment comment){
-        comments.add(comment);
+    public void addComment(Comment comment) {
+        getComments().add(comment);
         comment.setPost(this);
     }
 
-    public void removeComment(Comment comment){
-        comments.remove(comment);
+    public void removeComment(Comment comment) {
+        getComments().remove(comment);
         comment.setPost(null);
     }
 

@@ -36,12 +36,12 @@ public class User implements Serializable {
     private List<Post> posts = new ArrayList<>();
 
     public void addPost(Post post) {
-        posts.add(post);
+        getPosts().add(post);
         post.setUser(this);
     }
 
     public void removePost(Post post) {
-        posts.remove(post);
+        getPosts().remove(post);
         post.setUser(null);
     }
 

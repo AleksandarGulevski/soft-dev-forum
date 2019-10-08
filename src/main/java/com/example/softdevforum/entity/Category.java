@@ -26,18 +26,17 @@ public class Category implements Serializable {
 
     @OneToMany(
             mappedBy = "category",
-            cascade = CascadeType.ALL,
-            orphanRemoval = false
+            cascade = CascadeType.ALL
     )
     private List<Post> posts = new ArrayList<>();
 
-    public void addPost(Post post){
-        posts.add(post);
+    public void addPost(Post post) {
+        getPosts().add(post);
         post.setCategory(this);
     }
 
-    public void removePost(Post post){
-        posts.remove(post);
+    public void removePost(Post post) {
+        getPosts().remove(post);
         post.setCategory(null);
     }
 
