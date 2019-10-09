@@ -19,7 +19,7 @@ import java.time.OffsetDateTime;
 public class Comment implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
     private OffsetDateTime createdAt;
