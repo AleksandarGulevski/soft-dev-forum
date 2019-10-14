@@ -10,7 +10,6 @@ import com.example.softdevforum.exception.ResourceValidationException;
 import com.example.softdevforum.mapper.PostMapper;
 import com.example.softdevforum.repository.CategoryRepository;
 import com.example.softdevforum.repository.PostRepository;
-import com.example.softdevforum.repository.UserRepository;
 import com.example.softdevforum.util.ErrorCode;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,13 +23,13 @@ import java.util.Optional;
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final CategoryRepository categoryRepository;
 
     @Override
     public Post create(final PostDto postDto, final long userId, final long categoryId) {
         Post post = PostMapper.dtoToEntity(postDto);
-        User user = getUserById(userId);
+        User user = userService.getUserById(userId);
         Category category = getCategoryById(categoryId);
         user.addPost(post);
         category.addPost(post);
@@ -39,12 +38,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(final long id) {
         postRepository.findById(id).ifPresent((post) -> {
             postRepository.delete(post);
         });
         Optional<Post> postOptional = postRepository.findById(id);
-        if (postOptional.isPresent()){
+        if (postOptional.isPresent()) {
             throw new ResourceValidationException(
                     ErrorCode.POST_DELETING_UNSUCCESSFUL, "Post deleting was unsuccessful, try again"
             );
@@ -53,31 +52,35 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post update(final UpdatePostDetailsDto updatePostDetailsDto, final long id) {
-    Post post = getPostById(id);
-    PostMapper.updatePostDetails(updatePostDetailsDto, post);
-    return postRepository.save(post);
+        Post post = getPostById(id);
+        PostMapper.updatePostDetails(updatePostDetailsDto, post);
+        return postRepository.save(post);
     }
+
 
     @Override
     public List<Post> getAll() {
-      List<Post> posts = new ArrayList<>();
-      postRepository.findAll().forEach(posts::add);
-      return posts;
+        List<Post> posts = new ArrayList<>();
+        postRepository.findAll().forEach(posts::add);
+        return posts;
     }
 
-    public User getUserById(long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(
-                ErrorCode.USER_NOT_FOUND, "User with id " + userId + " not found!"));
+     @Override
+    public List<Post> getAllFromSingleUser(final long userId) {
+        User user = userService.getUserById(userId);
+        return postRepository.findAllByUser(user);
     }
 
-    public Post getPostById(long postId) {
-        return postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException(
-                ErrorCode.POST_NOT_FOUND, "User with id " + postId + " not found!"));
+    @Override
+    public Post getPostById(long id) {
+        return postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
+                ErrorCode.POST_NOT_FOUND, "Post with id " + id + " not found!"));
     }
 
-    public Category getCategoryById(long categoryId) {
+    public Category getCategoryById(final long categoryId) {
         return categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(
-                ErrorCode.CATEGORY_NOT_FOUND, "User with id " + categoryId + " not found!"));
+                ErrorCode.CATEGORY_NOT_FOUND, "Category with id " + categoryId + " not found!"));
     }
+
 
 }

@@ -17,7 +17,5 @@ public interface CategoryService {
 
     Category delete(final long id);
 
-    Category update(final long id);
-
     List<Post> getAllFromSingleCategory(final long userId);
 }

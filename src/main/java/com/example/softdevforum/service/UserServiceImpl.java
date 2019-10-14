@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     private final PostRepository postRepository;
 
     @Override
-    public User create(UserDto userDto, long id) {
+    public User create(final UserDto userDto, final long id) {
         User user = UserMapper.dtoToEntity(userDto);
         Optional<User> userOptional = userRepository.findByUsername(userDto.getUserName());
         if (userOptional.isPresent()) {
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(final long id) {
         userRepository.findById(id).ifPresent(user -> {
             userRepository.delete(user);
         });
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByUserName(String userName) {
+    public User getUserByUserName(final String userName) {
         return userRepository.findByUsername(userName)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         ErrorCode.USER_NOT_FOUND, "User with username " + userName + " not found"));
@@ -71,12 +71,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Post> getAllFromSingleUser(long userId) {
+    public List<Post> getAllFromSingleUser(final long userId) {
         User user = getUserById(userId);
         return postRepository.findAllByUser(user);
     }
 
-    public User getUserById(long userId) {
+    public User getUserById(final long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(
                 ErrorCode.USER_NOT_FOUND, "User with id " + userId + " not found!"));
     }

@@ -22,6 +22,8 @@ public interface PostService {
 
     Post getPostById(final long id);
 
+    List<Post> getAllFromSingleUser(@NotNull(message = "Invalid data")final long userId);
+
     List<Post> getAll();
 
 

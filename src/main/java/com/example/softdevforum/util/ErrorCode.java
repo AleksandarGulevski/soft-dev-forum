@@ -12,7 +12,8 @@ public interface ErrorCode {
     int POST_DELETING_UNSUCCESSFUL = 201;
 
     //COMMENT
-
+    int COMMENT_NOT_FOUND = 300;
+    int COMMENT_DELETING_UNSUCCESSFUL = 301;
 
     //CATEGORY
     int CATEGORY_NOT_FOUND = 352;

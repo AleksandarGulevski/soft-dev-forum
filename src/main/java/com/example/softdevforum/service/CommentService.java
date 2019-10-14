@@ -14,9 +14,7 @@ public interface CommentService {
 
     Comment create(@NotNull(message = "Invalid data") final CommentDto commentDto, final long id);
 
-    Comment delete(final long id);
-
-    Comment update(final long id);
+    void delete(final long id);
 
     List<Comment> getAllFromSingleUser(final long userId);
 

@@ -21,7 +21,9 @@ public interface UserService {
 
     User update(@NotNull(message = "Invalid data") @Valid final UpdateUserDetailsDto updateUserDetailsDto, final long id);
 
-    User getUserByUserName(String userName);
+    User getUserByUserName(final String userName);
+
+    User getUserById (final long id);
 
     List<User> getAllUsers();
 
