@@ -1,5 +1,6 @@
 package com.example.softdevforum.mapper;
 
+import com.example.softdevforum.dto.UpdateUserDetailsDto;
 import com.example.softdevforum.dto.UserDto;
 import com.example.softdevforum.entity.User;
 
@@ -22,5 +23,12 @@ public class UserMapper {
                 .email(user.getEmail())
                 .build();
         return userDto;
+    }
+
+    public static void updateUserDetails(final UpdateUserDetailsDto dto, final User entity){
+        entity.setFirstName(dto.getFirstName())
+                .setLastName(dto.getLastName())
+                .setUserName(dto.getUserName())
+                .setEmail(dto.getEmail());
     }
 }

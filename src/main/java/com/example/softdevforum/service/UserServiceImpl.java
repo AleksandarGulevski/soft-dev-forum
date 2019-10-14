@@ -1,15 +1,20 @@
 package com.example.softdevforum.service;
 
+import com.example.softdevforum.dto.UpdateUserDetailsDto;
 import com.example.softdevforum.dto.UserDto;
 import com.example.softdevforum.entity.Post;
 import com.example.softdevforum.entity.User;
+import com.example.softdevforum.exception.ResourceNotFoundException;
+import com.example.softdevforum.exception.ResourceValidationException;
 import com.example.softdevforum.exception.UserAlreadyRegisteredException;
 import com.example.softdevforum.mapper.UserMapper;
+import com.example.softdevforum.repository.PostRepository;
 import com.example.softdevforum.repository.UserRepository;
 import com.example.softdevforum.util.ErrorCode;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +23,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PostRepository postRepository;
 
     @Override
     public User create(UserDto userDto, long id) {
@@ -31,27 +37,47 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User delete(long id) {
-        return null;
+    public void delete(long id) {
+        userRepository.findById(id).ifPresent(user -> {
+            userRepository.delete(user);
+        });
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            throw new ResourceValidationException(
+                    ErrorCode.USER_DELETING_UNSUCCESSFUL, "User deleting was unsuccessful, try again"
+            );
+        }
     }
 
     @Override
-    public User update(long id) {
-        return null;
+    public User update(final UpdateUserDetailsDto updateUserDetailsDto, final long id) {
+        User user = getUserById(id);
+        UserMapper.updateUserDetails(updateUserDetailsDto, user);
+        return userRepository.save(user);
     }
 
     @Override
     public User getUserByUserName(String userName) {
-        return null;
+        return userRepository.findByUsername(userName)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        ErrorCode.USER_NOT_FOUND, "User with username " + userName + " not found"));
     }
 
     @Override
     public List<User> getAllUsers() {
-        return null;
+        List<User> users = new ArrayList<>();
+        userRepository.findAll().forEach(users::add);
+        return users;
     }
 
     @Override
     public List<Post> getAllFromSingleUser(long userId) {
-        return null;
+        User user = getUserById(userId);
+        return postRepository.findAllByUser(user);
+    }
+
+    public User getUserById(long userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(
+                ErrorCode.USER_NOT_FOUND, "User with id " + userId + " not found!"));
     }
 }
