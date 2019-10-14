@@ -1,6 +1,7 @@
 package com.example.softdevforum.mapper;
 
 import com.example.softdevforum.dto.PostDto;
+import com.example.softdevforum.dto.UpdatePostDetailsDto;
 import com.example.softdevforum.entity.Post;
 
 public class PostMapper {
@@ -20,5 +21,11 @@ public class PostMapper {
                 .createdAt(post.getCreatedAt())
                 .build();
         return postDto;
+    }
+
+    public static void updatePostDetails(final UpdatePostDetailsDto dto, final Post entity){
+        entity.setTitle(dto.getTitle())
+                .setContent(dto.getContent())
+                .setCreatedAt(dto.getCreatedAt());
     }
 }

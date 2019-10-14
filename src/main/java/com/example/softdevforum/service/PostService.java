@@ -1,10 +1,12 @@
 package com.example.softdevforum.service;
 
 import com.example.softdevforum.dto.PostDto;
+import com.example.softdevforum.dto.UpdatePostDetailsDto;
 import com.example.softdevforum.entity.Post;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -12,17 +14,15 @@ import java.util.List;
 @Validated
 public interface PostService {
 
-    Post create(@NotNull(message = "Invalid data") final PostDto postDto, final long id);
+    Post create(@NotNull(message = "Invalid data") final PostDto postDto, final long userId, final long categoryId);
 
-    Post delete(final long id);
+    void delete(final long id);
 
-    Post update(final long id);
+    Post update(@NotNull(message = "Invalid data") @Valid final UpdatePostDetailsDto updatePostDetailsDto, final long id);
 
-    Post getById(final long id);
+    Post getPostById(final long id);
 
     List<Post> getAll();
-
-
 
 
     //TODO get the number of comments for one post
