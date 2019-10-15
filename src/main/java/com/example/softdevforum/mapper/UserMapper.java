@@ -21,6 +21,7 @@ public class UserMapper {
                 .lastName(user.getLastName())
                 .userName(user.getUserName())
                 .email(user.getEmail())
+                .id(user.getId())
                 .build();
         return userDto;
     }

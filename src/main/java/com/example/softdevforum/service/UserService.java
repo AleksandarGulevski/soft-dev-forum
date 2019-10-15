@@ -15,7 +15,7 @@ import java.util.List;
 @Validated
 public interface UserService {
 
-    User create(@NotNull(message = "Invalid data") final UserDto userDto, final long id);
+    User create(@NotNull(message = "Invalid data") final UserDto userDto);
 
     void delete(final long id);
 

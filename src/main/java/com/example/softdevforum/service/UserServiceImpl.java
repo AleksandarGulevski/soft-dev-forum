@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     private final PostRepository postRepository;
 
     @Override
-    public User create(final UserDto userDto, final long id) {
+    public User create(final UserDto userDto) {
         User user = UserMapper.dtoToEntity(userDto);
         Optional<User> userOptional = userRepository.findByUserName(userDto.getUserName());
         if (userOptional.isPresent()) {
