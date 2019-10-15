@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User create(final UserDto userDto, final long id) {
         User user = UserMapper.dtoToEntity(userDto);
-        Optional<User> userOptional = userRepository.findByUsername(userDto.getUserName());
+        Optional<User> userOptional = userRepository.findByUserName(userDto.getUserName());
         if (userOptional.isPresent()) {
             throw new UserAlreadyRegisteredException(
                     ErrorCode.USER_ALREADY_REGISTERED, "User with that username is already registered");
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUserName(final String userName) {
-        return userRepository.findByUsername(userName)
+        return userRepository.findByUserName(userName)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         ErrorCode.USER_NOT_FOUND, "User with username " + userName + " not found"));
     }

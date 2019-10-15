@@ -15,7 +15,9 @@ public interface CategoryService {
 
     Category create(@NotNull(message = "Invalid data") final CategoryDto categoryDto, final long id);
 
-    Category delete(final long id);
+    void delete(final long id);
+
+    Category getCategoryById(final long id);
 
     List<Post> getAllFromSingleCategory(final long userId);
 }

@@ -16,5 +16,6 @@ public interface ErrorCode {
     int COMMENT_DELETING_UNSUCCESSFUL = 301;
 
     //CATEGORY
-    int CATEGORY_NOT_FOUND = 352;
+    int CATEGORY_NOT_FOUND = 351;
+    int CATEGORY_DELETING_UNSUCCESSFUL = 352;
 }
