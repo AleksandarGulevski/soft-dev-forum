@@ -14,6 +14,7 @@ public class CategoryMapper {
     public static CategoryDto entityToDto(Category category){
         CategoryDto categoryDto = CategoryDto.builder()
                 .name(category.getName())
+                .id(category.getId())
                 .build();
         return  categoryDto;
     }

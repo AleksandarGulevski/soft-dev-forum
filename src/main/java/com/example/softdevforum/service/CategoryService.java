@@ -13,11 +13,13 @@ import java.util.List;
 @Validated
 public interface CategoryService {
 
-    Category create(@NotNull(message = "Invalid data") final CategoryDto categoryDto, final long id);
+    Category create(@NotNull(message = "Invalid data") final CategoryDto categoryDto);
 
     void delete(final long id);
 
     Category getCategoryById(final long id);
+
+    List<Category> getAll();
 
     List<Post> getAllFromSingleCategory(final long userId);
 }

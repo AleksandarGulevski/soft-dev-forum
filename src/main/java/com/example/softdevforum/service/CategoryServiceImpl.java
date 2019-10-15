@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final PostRepository postRepository;
 
     @Override
-    public Category create(@NotNull(message = "Invalid data") CategoryDto categoryDto, long id) {
+    public Category create(@NotNull(message = "Invalid data") CategoryDto categoryDto) {
         Category category = CategoryMapper.dtoToEntity(categoryDto);
         return categoryRepository.save(category);
     }
@@ -53,5 +54,12 @@ public class CategoryServiceImpl implements CategoryService {
     public Category getCategoryById(long id) {
         return categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
                 ErrorCode.CATEGORY_NOT_FOUND, "Category with id " + id + " not found!"));
+    }
+
+    @Override
+    public List<Category> getAll() {
+        List<Category> categories = new ArrayList<>();
+        categoryRepository.findAll().forEach(categories ::add);
+        return categories;
     }
 }

@@ -19,6 +19,7 @@ public class PostMapper {
                 .title(post.getTitle())
                 .content(post.getContent())
                 .createdAt(post.getCreatedAt())
+                .id(post.getId())
                 .build();
         return postDto;
     }
