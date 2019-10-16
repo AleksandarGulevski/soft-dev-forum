@@ -1,7 +1,9 @@
 package com.example.softdevforum.api;
 
 import com.example.softdevforum.dto.CategoryDto;
+import com.example.softdevforum.dto.PostDto;
 import com.example.softdevforum.mapper.CategoryMapper;
+import com.example.softdevforum.mapper.PostMapper;
 import com.example.softdevforum.service.CategoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
@@ -32,5 +34,12 @@ private final CategoryService categoryService;
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public CategoryDto getCategoryById(@PathVariable("id") long id) {
         return CategoryMapper.entityToDto(categoryService.getCategoryById(id));
+    }
+
+    @GetMapping(value = "/{id}/posts", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<PostDto> getAllperSingleCategory(@PathVariable ("id") long id) {
+        return categoryService.getAllFromSingleCategory(id).stream()
+                .map(PostMapper::entityToDto)
+                .collect(Collectors.toList());
     }
 }
